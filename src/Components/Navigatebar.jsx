@@ -1,0 +1,24 @@
+import React from 'react'
+import {Container, Nav, Navbar} from 'react-bootstrap';
+//import {NavDropdown} from 'react-bootstrap';
+
+function Navigatebar() {
+  return (
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Budget App</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/addCost">Add Cost(s)</Nav.Link>
+            <Nav.Link href="/addJob">Add Job(s)</Nav.Link>
+            <Nav.Link href="/removeJob">Remove Job(s)</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+
+export default Navigatebar

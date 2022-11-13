@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Home from './Components/Home';
+import Login from './Components/Login';
+import AddFixedCost from './Components/AddFixedCost';
+import AddJob from './Components/AddJob';
+import RemoveJob from './Components/RemoveJob';
+import UpdateJob from './Components/UpdateJob';
+import Navigatebar from './Components/Navigatebar';
+import {Route, Routes} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Navigatebar/>
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/addCost" element={<AddFixedCost/>}/>
+      <Route path="/addJob" element={<AddJob/>}/>
+      <Route path="/removeJob" element={<RemoveJob/>}/>
+      <Route path="/updateJob" element={<UpdateJob/>}/>
+    </Routes>
+    </>
+  )
 }
 
-export default App;
+export default App
