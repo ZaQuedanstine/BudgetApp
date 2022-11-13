@@ -11,6 +11,10 @@ function Home() {
   const [grossYearlyIncome, setGrossYearlyIncome] = useState(0);
   const [grossMonthlyIncome, setGrossMonthlyIncome] = useState(0);
   const [grossWeeklyIncome, setGrossWeeklyIncome] = useState(0);
+  const [shelterSpending, setShelterSpending ] = useState(0);
+  const [billsSpending, setBillsSpending ] = useState(0);
+  const [investSpending, setInvestSpending ] = useState(0);
+  const [consumptionSpending, setConsumptionSpending ] = useState(0);
 
   const getIncome = (data) => {
     let yearlyIncome = 0;
@@ -39,7 +43,25 @@ function Home() {
     setGrossYearlyIncome(grossYearlyIncome);
     setGrossMonthlyIncome(grossMonthlyIncome);
     setGrossWeeklyIncome(grossWeeklyIncome);
+    setTotalSpending()
   };
+
+  const setTotalSpending = () =>{
+    costsData.forEach(cost => {
+      let shelter = 0;
+      let bills = 0;
+      let invest = 0;
+      let consumption = 0;
+      if(cost["amountType"] === "shelter") shelter++;
+      else if(cost["amountType"] === "bills")bills++;
+      else if(cost["amountType"] === "invest")invest++;
+      else if(cost["amountType"] === "consumption")consumption++;
+      setShelterSpending(shelter);
+      setBillsSpending(bills);
+      setInvestSpending(invest);
+      setConsumptionSpending(consumption);
+    });
+  }
 
   useEffect(() =>{
     fetch("http://localhost:3001/jobs")
@@ -53,7 +75,7 @@ function Home() {
     .then(data => {
           setCostsData(data);
           console.log(data)}))
-          }, []);
+          });
 
   return (
     <div>
@@ -68,23 +90,37 @@ function Home() {
         <h5>Yearly {"$" + grossYearlyIncome}</h5>
         <h5>Monthly (average) {"$" + grossMonthlyIncome}</h5>
         <h5>Weekly {"$" + grossWeeklyIncome}</h5>
-        <h2>Spending</h2>
+        <h2>Spending This Month</h2>
         <table>
           <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Type</th>
+            <th></th>
+            <th>Current Total Amount</th>
+            <th>Target Amount</th>
           </tr>
-          {(costsData === null ? <p>Loading...</p>:
-              costsData.map((cost, i) => {
-                return(<tr key={i}>
-                  <th>{cost["costName"]}</th>
-                  <th>${cost["amount"]}</th>
-                  <th>{cost["costType"]}</th>
-                </tr>)
-              })
+          {(costsData === null ? <tr>Loading...</tr>:
+          <>
+                <tr>
+                  <th>Shelter</th>
+                  <th>{shelterSpending}</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <th>Bills</th>
+                  <th>{billsSpending}</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <th>Invest</th>
+                  <th>{investSpending}</th>
+                  <th></th>
+                </tr>
+                <tr>
+              <th>Consumption</th>
+              <th>{consumptionSpending}</th>
+              <th></th>
+            </tr>
+            </>
             )}
-            <tr></tr>
         </table>
         </>
       }

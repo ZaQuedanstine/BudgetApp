@@ -1,0 +1,28 @@
+{
+    "jobs": [
+      {
+        "jobName": "Dominos",
+        "income": "15",
+        "incomeType": "hourly",
+        "hours": "25",
+        "taxRate": "0.2",
+        "id": 1
+      }
+    ],
+    "costs": [
+      {
+        "costName": "Dominos",
+        "amount": "10",
+        "frequency": "oneTime",
+        "costType": "consumption",
+        "id": 1
+      },
+      {
+        "co stName": "Rent",
+        "amount": "425",
+        "frequency": "monthly",
+        "costType": "shelter",
+        "id": 2
+      }
+    ]
+  }
