@@ -5,7 +5,7 @@ import CurrencyInput from 'react-currency-input-field';
 function AddJob() {
     const [jobName, setJobName] = useState('');
     const [income, setIncome] = useState('');
-    const [incomeType, setincomeType] = useState("h");
+    const [incomeType, setincomeType] = useState("hourly");
     const [hours, sethours] = useState(0);
     const [taxRate, setTaxRate] = useState(0);
 

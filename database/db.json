@@ -1,28 +1,51 @@
 {
-    "jobs": [
-      {
-        "jobName": "Dominos",
-        "income": "15",
-        "incomeType": "hourly",
-        "hours": "25",
-        "taxRate": "0.2",
-        "id": 1
-      }
-    ],
-    "costs": [
-      {
-        "costName": "Dominos",
-        "amount": "10",
-        "frequency": "oneTime",
-        "costType": "consumption",
-        "id": 1
-      },
-      {
-        "co stName": "Rent",
-        "amount": "425",
-        "frequency": "monthly",
-        "costType": "shelter",
-        "id": 2
-      }
-    ]
-  }
+  "jobs": [
+    {
+      "jobName": "Dominos",
+      "income": "15",
+      "incomeType": "hourly",
+      "hours": "30",
+      "taxRate": ".15",
+      "id": 6
+    },
+    {
+      "jobName": "Fed Ex",
+      "income": "16.25",
+      "incomeType": "hourly",
+      "hours": "8",
+      "taxRate": "0.15",
+      "id": 8
+    }
+  ],
+  "costs": [
+    {
+      "costName": "Rent",
+      "amount": "500",
+      "frequency": "oneTime",
+      "costType": "shelter",
+      "id": 1
+    },
+    {
+      "costName": "Water",
+      "amount": "30",
+      "frequency": "monthly",
+      "costType": "bills",
+      "id": 2
+    },
+    {
+      "costName": "Power",
+      "amount": "200",
+      "frequency": "oneTime",
+      "costType": "bills",
+      "id": 3
+    },
+    {
+      "costName": "Trash",
+      "amount": "10",
+      "frequency": "oneTime",
+      "costType": "bills",
+      "date": "2022-11-16",
+      "id": 4
+    }
+  ]
+}

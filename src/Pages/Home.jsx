@@ -3,18 +3,26 @@ import '../App.css'
 
 
 function Home() {
+  //Data State Variables
   const [jobsData, setJobsData] = useState(null);
   const [costsData, setCostsData] = useState(null);
+
+  //Income State Variables
   const [yearlyIncome, setYearlyIncome] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [weeklyIncome, setWeeklyIncome] = useState(0);
   const [grossYearlyIncome, setGrossYearlyIncome] = useState(0);
   const [grossMonthlyIncome, setGrossMonthlyIncome] = useState(0);
   const [grossWeeklyIncome, setGrossWeeklyIncome] = useState(0);
+
+  //Spending State Variables
   const [shelterSpending, setShelterSpending ] = useState(0);
   const [billsSpending, setBillsSpending ] = useState(0);
   const [investSpending, setInvestSpending ] = useState(0);
   const [consumptionSpending, setConsumptionSpending ] = useState(0);
+
+  //Spending Target State Variables
+  const [monthlyTarget, setMonthlyTarget] = useState(0);
 
   const getIncome = (data) => {
     let yearlyIncome = 0;
@@ -37,31 +45,17 @@ function Home() {
       grossMonthlyIncome += (tempIncome * 52)/12 - ((tempIncome * 52)/12 * taxRate);
       grossYearlyIncome += (tempIncome * 52) - (tempIncome * 52 * taxRate);
     }
-    setYearlyIncome(yearlyIncome);
-    setMonthlyIncome(monthlyIncome);
-    setWeeklyIncome(weeklyIncome);
-    setGrossYearlyIncome(grossYearlyIncome);
-    setGrossMonthlyIncome(grossMonthlyIncome);
-    setGrossWeeklyIncome(grossWeeklyIncome);
-    setTotalSpending()
+    //set income
+    setYearlyIncome(yearlyIncome.toFixed(2));
+    setMonthlyIncome(monthlyIncome.toFixed(2));
+    setWeeklyIncome(weeklyIncome.toFixed(2));
+    //set gross income
+    setGrossYearlyIncome(grossYearlyIncome.toFixed(2));
+    setGrossMonthlyIncome(grossMonthlyIncome.toFixed(2));
+    setGrossWeeklyIncome(grossWeeklyIncome.toFixed(2));
+    //set target spending
+    setMonthlyTarget((monthlyIncome/4).toFixed(2));
   };
-
-  const setTotalSpending = () =>{
-    costsData.forEach(cost => {
-      let shelter = 0;
-      let bills = 0;
-      let invest = 0;
-      let consumption = 0;
-      if(cost["amountType"] === "shelter") shelter++;
-      else if(cost["amountType"] === "bills")bills++;
-      else if(cost["amountType"] === "invest")invest++;
-      else if(cost["amountType"] === "consumption")consumption++;
-      setShelterSpending(shelter);
-      setBillsSpending(bills);
-      setInvestSpending(invest);
-      setConsumptionSpending(consumption);
-    });
-  }
 
   useEffect(() =>{
     fetch("http://localhost:3001/jobs")
@@ -74,8 +68,28 @@ function Home() {
     .then(response => response.json())
     .then(data => {
           setCostsData(data);
-          console.log(data)}))
-          });
+          console.log(data)}));
+          }, []);
+    
+  useEffect(() =>{
+    if(costsData != null){
+      let shelter = 0;
+      let bills = 0;
+      let invest = 0;
+      let consumption = 0;
+      costsData.forEach(cost => {
+      let temp = parseFloat(cost["amount"]);
+      if(cost["costType"] === "shelter") shelter += temp;
+      else if(cost["costType"] === "bills")bills += temp;
+      else if(cost["costType"] === "invest")invest += temp;
+      else if(cost["costType"] === "consumption")consumption += temp;
+      })
+      setShelterSpending(shelter);
+      setBillsSpending(bills);
+      setInvestSpending(invest);
+      setConsumptionSpending(consumption);
+    }
+  }, [costsData])
 
   return (
     <div>
@@ -91,36 +105,39 @@ function Home() {
         <h5>Monthly (average) {"$" + grossMonthlyIncome}</h5>
         <h5>Weekly {"$" + grossWeeklyIncome}</h5>
         <h2>Spending This Month</h2>
-        <table>
-          <tr>
-            <th></th>
-            <th>Current Total Amount</th>
-            <th>Target Amount</th>
-          </tr>
-          {(costsData === null ? <tr>Loading...</tr>:
-          <>
-                <tr>
-                  <th>Shelter</th>
-                  <th>{shelterSpending}</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th>Bills</th>
-                  <th>{billsSpending}</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th>Invest</th>
-                  <th>{investSpending}</th>
-                  <th></th>
-                </tr>
-                <tr>
+        <table className='border'>
+          <tbody>
+            <tr className='border'>
+              <th></th>
+              <th>Current Total Amount</th>
+              <th>Target Amount</th>
+            </tr>
+            <tr>
+              <th>Shelter</th>
+              <th>{shelterSpending}</th>
+              <th>{monthlyTarget}</th>
+            </tr>
+            <tr>
+              <th>Bills</th>
+              <th>{billsSpending}</th>
+              <th>{monthlyTarget}</th>
+            </tr>
+            <tr>
+              <th>Invest</th>
+              <th>{investSpending}</th>
+              <th>{monthlyTarget}</th>
+            </tr>
+            <tr>
               <th>Consumption</th>
               <th>{consumptionSpending}</th>
-              <th></th>
+              <th>{monthlyTarget}</th>
             </tr>
-            </>
-            )}
+            <tr className='border'>
+              <th>Total</th>
+              <th>{shelterSpending + billsSpending + investSpending + consumptionSpending}</th>
+              <th>{grossMonthlyIncome}</th>
+            </tr>
+          </tbody>
         </table>
         </>
       }

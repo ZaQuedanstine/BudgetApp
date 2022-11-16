@@ -1,9 +1,11 @@
-import React, {useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react';
+import UpdateJob from './UpdateJob';
 import '../App.css'
 
-function RemoveJob() {
+function ManageJobs() {
     const [backendData, setbackendData] = useState(null);
     const [selected, setSelected] = useState([]);
+    const [selectedForUpdating, setSelectedforUpdating] = useState(null);
 
     const getBackendData = () =>{
         fetch("http://localhost:3001/jobs")
@@ -11,6 +13,7 @@ function RemoveJob() {
         .then(data => {
               setbackendData(data)
               console.log(data)})
+        .catch((err) => {console.log(err)})
     }
 
     const handleCheckBoxClick = (checked, id) => {
@@ -49,36 +52,55 @@ function RemoveJob() {
 
   return (
     <>
-    <h1>Remove Job</h1>
+    <h1>Jobs List:</h1>
     {(backendData === null) ? 
         <p>loading...</p> : 
         <>
         <table>
+            <thead>
             <tr className='border'>
                 <th>Name</th>
                 <th>Pay Rate</th>
                 <th>Pay Type</th>
                 <th>hours</th>
                 <th>Tax Rate</th>
+                <th>Update?</th>
                 <th>Remove?</th>
             </tr>
+            </thead>
             {backendData.map((job, i) => (
-            <tr key={i} className='border'>
-                <th>{job["jobName"]}</th>
-                <th>${job["income"]}</th>
-                <th>{job["incomeType"]}</th>
-                <th>{job["hours"]}</th>
-                <th>{job["taxRate"]}</th>
-                <th><input
-                    type="checkbox"
-                    onClick={(e) => handleCheckBoxClick(e, job["id"])}/></th>
-            </tr>))}
+            <tbody>
+                <tr key={i} className='border'>
+                    <th>{job["jobName"]}</th>
+                    <th>${job["income"]}</th>
+                    <th>{job["incomeType"]}</th>
+                    <th>{job["hours"]}</th>
+                    <th>{job["taxRate"]}</th>
+                    <th><button
+                        onClick={(e) => (selectedForUpdating === i) ? setSelectedforUpdating(null) : setSelectedforUpdating(i)}>Update</button></th>
+                    <th><input
+                        type="checkbox"
+                        onClick={(e) => handleCheckBoxClick(e, job["id"])}/></th>
+                </tr>
+                {(selectedForUpdating === i) ?
+                <UpdateJob job={job}/>
+                : ""}
+            </tbody>))
+            }
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th><buttton className='button' onClick={(e) => handleCheckRemove(e.checked)}>Remove Selected</buttton></th>
+            </tr>
         </table>
-        <button onClick={(e) => handleCheckRemove(e.checked)} >Remove</button>
         </>
     }
     </>
   )
 }
 
-export default RemoveJob
+export default ManageJobs

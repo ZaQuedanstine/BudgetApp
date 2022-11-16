@@ -11,9 +11,8 @@ function Navigatebar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/addCost">Add Cost(s)</Nav.Link>
-            <Nav.Link href="/addJob">Add Job(s)</Nav.Link>
-            <Nav.Link href="/removeJob">Remove Job(s)</Nav.Link>
+            <Nav.Link href="/jobs">Income</Nav.Link>
+            <Nav.Link href="/addCost">Outcome</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

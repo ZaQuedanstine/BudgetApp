@@ -1,5 +1,23 @@
 table, th, .border {
   border :1px solid black;
+  text-align: center;
+}
+.site{
+  background-color: #1E6E80;
+}
+.button{
+  background-color: red; /* Green */
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.update{
+  width: 100%;
 }
 table{
   width: 100%

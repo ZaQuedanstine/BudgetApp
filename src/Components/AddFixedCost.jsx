@@ -5,11 +5,12 @@ function AddFixedCost() {
   const [costName, setCostName] = useState('');
   const [amount, setAmount] = useState('');
   const [costType, setCostType] = useState("shelter");
-  const [frequency, setFrequency] = useState("oneTime")
+  const [frequency, setFrequency] = useState("oneTime");
+  const [date, setDate] = useState()
 
   const handleSubmit = (e) =>{
       //e.preventDefault();
-      let cost = {costName: costName, amount: amount, frequenct: frequency, costType: costType}
+      let cost = {costName, amount, frequency, costType, date}
       fetch("http://localhost:3001/costs", {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -45,6 +46,10 @@ function AddFixedCost() {
             <option value="invest">Invest</option>
             <option value="consumption">Consumption</option>     
         </select>
+        <label>Date:</label>
+        <input
+          type="date"
+          onChange={(e) => setDate(e.target.value)}/>
         <button>Add</button>  
       </form>
     </div>
